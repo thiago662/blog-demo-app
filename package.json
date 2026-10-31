@@ -1,35 +1,39 @@
 {
-    "name": "blog-demo-app",
-    "version": "0.1.0",
-    "description": "Site de exemplo (React + Next.js) que le o blog blog-demo do Ademiro de Blogs.",
-    "scripts": {
-        "dev": "next dev",
-        "build": "next build",
-        "start": "npx serve out",
-        "lint": "eslint .",
-        "test": "vitest run --passWithNoTests"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/thiago662/blog-demo-app.git"
-    },
-    "dependencies": {
-        "@popperjs/core": "^2.11.8",
-        "bootstrap": "^5.3.8",
-        "geist": "^1.9.0",
-        "next": "^16.4.3",
-        "react": "^19.3.1",
-        "react-dom": "^19.3.1"
-    },
-    "devDependencies": {
-        "@types/node": "^26.6.6",
-        "@types/react": "^19.3.0",
-        "@types/react-dom": "^19.3.0",
-        "eslint": "^9.39.5",
-        "eslint-config-next": "^16.4.3",
-        "typescript": "^6.0.3",
-        "vite": "^8.3.5",
-        "vitest": "^5.0.5"
-    },
-    "private": true
+    "name":  "blog-demo-app",
+    "version":  "0.1.0",
+    "description":  "Site de exemplo (React + Next.js) que le o blog blog-demo do Ademiro de Blogs.",
+    "scripts":  {
+                    "dev":  "next dev",
+                    "build":  "next build",
+                    "start":  "npx serve out",
+                    "lint":  "eslint .",
+                    "test":  "vitest run --passWithNoTests",
+                    "check":  "node tools/check.mjs"
+                },
+    "repository":  {
+                       "type":  "git",
+                       "url":  "git+https://github.com/thiago662/blog-demo-app.git"
+                   },
+    "dependencies":  {
+                         "@popperjs/core":  "^2.11.8",
+                         "bootstrap":  "^5.3.8",
+                         "geist":  "^1.9.0",
+                         "marked":  "^18.1.2",
+                         "next":  "^16.4.3",
+                         "react":  "^19.3.1",
+                         "react-dom":  "^19.3.1",
+                         "sanitize-html":  "^2.18.1"
+                     },
+    "devDependencies":  {
+                            "@types/node":  "^26.6.6",
+                            "@types/react":  "^19.3.0",
+                            "@types/react-dom":  "^19.3.0",
+                            "@types/sanitize-html":  "^2.16.2",
+                            "eslint":  "^9.39.5",
+                            "eslint-config-next":  "^16.4.3",
+                            "typescript":  "^6.0.3",
+                            "vite":  "^8.3.5",
+                            "vitest":  "^5.0.5"
+                        },
+    "private":  true
 }

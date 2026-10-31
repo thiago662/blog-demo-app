@@ -55,13 +55,13 @@ blogs/{blogId}/posts/{postId}  slug, title, subtitle, summary, coverUrl, body (m
 - [x] Confirmar a stack com o usuário (Next.js estático × Vite + React Router) — **Next.js** escolhido
 - [x] Criar o projeto (TypeScript 6, ESLint, Vitest), Bootstrap, fonte Geist
 - [x] `site.config.ts` com os padrões do exemplo
-- [ ] Workflow de deploy no Pages (`basePath`, `.nojekyll`) e primeiro deploy (workflow criado; falta o deploy passar)
-- [ ] Usuário: **Settings → Pages → Source: GitHub Actions**
+- [x] Workflow de deploy no Pages (`basePath`, `.nojekyll`) e primeiro deploy — no ar
+- [x] Usuário: **Settings → Pages → Source: GitHub Actions**
 
 ### Fase 1 — Dados
-- [ ] Busca do blog pelo slug, lista de posts publicados (mais recentes primeiro) e post pelo slug, no build
-- [ ] Tipos do blog e do post; datas como string ISO
-- [ ] Markdown → HTML sanitizado (com testes, incluindo o caso da imagem do Ademiro)
+- [x] Busca do blog pelo slug, lista de posts publicados (mais recentes primeiro) e post pelo slug, no build — API REST do Firestore (`lib/firestore.ts`, `lib/blog.ts`), sem SDK e sem chave
+- [x] Tipos do blog e do post; datas como string ISO (`lib/types.ts`)
+- [x] Markdown → HTML sanitizado (com testes, incluindo o caso da imagem do Ademiro) — `lib/markdown.ts`, `lib/lib.test.ts`
 
 ### Fase 2 — Páginas
 - [ ] `/` lista de posts
@@ -85,3 +85,13 @@ blogs/{blogId}/posts/{postId}  slug, title, subtitle, summary, coverUrl, body (m
 
 ## Fora do primeiro ciclo
 - Paginação, busca, página por tag, RSS, comentários.
+
+---
+
+## Andamento
+
+- **Fase 0 e 1 feitas.** Acesso ao Firestore pela API REST (unQuery), sem apiKey: as rules liberam a leitura pública. Verificação: 
+pm test, 
+pm run build e 
+pm run check (Chrome headless, `tools/check.mjs`).
+- Dependências fixadas por causa do CI: @popperjs/core explícito (peer do Bootstrap; o lock do Windows não gravava), eslint@9 (plugins do eslint-config-next não aceitam o 10), 	ypescript@6 (typescript-eslint não aceita o 7), ite explícito (peer do Vitest).
