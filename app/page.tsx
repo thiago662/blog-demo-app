@@ -5,7 +5,7 @@ import { formatDate } from '@/lib/fields'
 export default async function Home() {
   const [blog, posts] = await Promise.all([getBlog(), listPosts()])
   return (
-    <main className="container py-5">
+    <main className="wrap py-5">
       <h1>{blog.name}</h1>
       <p className="lead">{blog.description}</p>
       {posts.length === 0 && <p>Nenhum post publicado ainda.</p>}

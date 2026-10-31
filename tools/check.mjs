@@ -68,6 +68,43 @@ if (href) {
 await go(`${BASE}/nao-existe-esse-post/`)
 out.postInexistente = await evaluate(`document.title + ' | h1=' + document.querySelector('h1')?.textContent + ' | robots=' + document.querySelector('meta[name=robots]')?.content`)
 
+// Tema: 1ª visita segue o sistema; botão alterna; escolha persiste após recarregar.
+const theme = () => evaluate(`document.documentElement.dataset.bsTheme + ' bg=' + getComputedStyle(document.body).backgroundColor + ' cor=' + getComputedStyle(document.body).color`)
+const emulate = (scheme) => send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: scheme }] })
+await evaluate(`localStorage.clear()`)
+await emulate('dark'); await go(`${BASE}/`)
+out.temaSistemaEscuro = await theme()
+await emulate('light'); await go(`${BASE}/`)
+out.temaSistemaClaro = await theme()
+await evaluate(`document.querySelector('.theme-toggle').click()`)
+out.temaAposClique = await theme()
+out.temaSalvo = await evaluate(`localStorage.getItem('theme')`)
+await go(`${BASE}/`)
+out.temaAposRecarregar = await theme()
+out.alvosMenoresQue44px = await evaluate(`[...document.querySelectorAll('.theme-toggle, .brand, .post-card-link')].filter((e) => e.getBoundingClientRect().height < 44).map((e) => e.className)`)
+out.favicon = await evaluate(`document.querySelector('link[rel~=icon]')?.href ?? '-'`)
+out.faviconStatus = await evaluate(`fetch(document.querySelector('link[rel~=icon]').href).then((r) => r.status)`)
+await go(`${BASE}/bem-vindo-ao-ademiro/`)
+out.legendaImagem = await evaluate(`document.querySelector('.fig-caption')?.textContent ?? 'sem legenda (post usa imagem sem título)'`)
+out.larguraColuna = await evaluate(`Math.round(document.querySelector('main').getBoundingClientRect().width)`)
+
+// SHOT=<pasta> npm run check → salva capturas (home e post, claro e escuro, desktop e celular).
+if (process.env.SHOT) {
+  const { writeFileSync } = await import('node:fs')
+  for (const [width, height, label] of [[1280, 900, 'desktop'], [390, 800, 'celular']]) {
+    await send('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: 1, mobile: width < 600 })
+    for (const scheme of ['light', 'dark']) {
+      await evaluate(`localStorage.setItem('theme', '${scheme}')`)
+      for (const [page, path] of [['home', '/'], ['post', '/bem-vindo-ao-ademiro/']]) {
+        await go(BASE + path)
+        const { result } = await send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: true })
+        writeFileSync(join(process.env.SHOT, `${page}-${scheme}-${label}.png`), Buffer.from(result.data, 'base64'))
+      }
+    }
+  }
+  out.larguraSemRolagemHorizontal = await evaluate(`document.documentElement.scrollWidth <= innerWidth`) // no celular
+}
+
 out.firestoreNoNavegador = firestoreRequests // esperado 0
 console.log(JSON.stringify(out, null, 2))
 console.log(problems.length ? 'PROBLEMAS:\n' + [...new Set(problems)].join('\n') : 'Nenhum erro de console.')

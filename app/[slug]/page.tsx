@@ -47,14 +47,14 @@ export default async function PostPage({ params }: Props) {
   ].filter(Boolean)
 
   return (
-    <main className="container py-5">
+    <main className="wrap py-5">
       <article>
         <h1>{post.title}</h1>
         {post.subtitle && <p className="lead">{post.subtitle}</p>}
         <p className="text-body-secondary">{facts.join(' · ')}</p>
         {post.coverUrl && (
           // eslint-disable-next-line @next/next/no-img-element -- export estático, sem otimização de imagem
-          <img src={post.coverUrl} alt="" className="img-fluid mb-4" />
+          <img src={post.coverUrl} alt="" className="post-cover mb-4" />
         )}
         <div className="post-body" dangerouslySetInnerHTML={{ __html: renderMarkdown(post.body) }} />
         {post.tags.length > 0 && <p className="text-body-secondary mt-4">Tags: {post.tags.join(', ')}</p>}

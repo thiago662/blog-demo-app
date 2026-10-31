@@ -7,6 +7,7 @@ describe('renderMarkdown', () => {
   it('usa o título como alt quando o alt é a proporção do editor', () => {
     const html = renderMarkdown('![1.00](https://x.com/a.png "Minha legenda")')
     expect(html).toContain('alt="Minha legenda"')
+    expect(html).toContain('<span class="fig-caption" aria-hidden="true">Minha legenda</span>')
   })
 
   it('mantém o alt comum', () => {

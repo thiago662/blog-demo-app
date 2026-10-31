@@ -2,8 +2,10 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { GeistSans } from 'geist/font/sans'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import './globals.css'
 import { siteConfig } from '@/site.config'
 import { getBlog } from '@/lib/blog'
+import ThemeToggle from './theme-toggle'
 
 export async function generateMetadata(): Promise<Metadata> {
   const blog = await getBlog()
@@ -15,16 +17,23 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
+// Roda antes da hidratação: tema salvo, ou o do sistema na 1ª visita (sem "piscar").
+const themeScript = `(function(){try{var t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-bs-theme',t)}catch(e){}})()`
+
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const blog = await getBlog()
   return (
-    <html lang="pt-BR" className={GeistSans.className}>
+    <html lang="pt-BR" className={GeistSans.className} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body>
-        <header className="border-bottom">
-          <div className="container py-3">
-            <Link href="/" className="fw-bold text-decoration-none">
+        <header className="site-header">
+          <div className="wrap">
+            <Link href="/" className="brand">
               {blog.name}
             </Link>
+            <ThemeToggle />
           </div>
         </header>
         {children}
