@@ -77,7 +77,7 @@ blogs/{blogId}/posts/{postId}  slug, title, subtitle, summary, coverUrl, body (m
 ### Fase 4 — Publicação e integração
 - [x] Deploy agendado (6h) e manual (no `deploy.yml`)
 - [x] No Ademiro, blog `blog-demo`: URL pública `https://thiago662.github.io/blog-demo-app` e URL do deploy `https://github.com/thiago662/blog-demo-app/actions/workflows/deploy.yml`
-- [ ] Conferir o card do link (Post Inspector do LinkedIn)
+- [x] Conferir o card do link (Post Inspector do LinkedIn) — imagem 1200x630, título e domínio corretos
 - [x] README final: seção "Personalizando" e "Usando com o seu blog" completas
 - [x] No README do Ademiro: link para este repositório como "modelo de site" (feito pelo usuário)
 
@@ -90,7 +90,7 @@ blogs/{blogId}/posts/{postId}  slug, title, subtitle, summary, coverUrl, body (m
 
 ## Andamento
 
-- **Fase 4: falta só conferir o card do link no Post Inspector do LinkedIn (usuário).** README final pronto; URLs preenchidas no Ademiro; post de exemplo com imagem legendada, conferida no build.`n- **Fase 3 feita.** Legenda das imagens do editor (título) aparece abaixo da imagem (`.fig-caption`, `aria-hidden` para não repetir o alt). `SHOT=<pasta> npm run check` salva capturas de tela. O 404 de prefetch (`__next.$d$slug.__PAGE__.txt`) só aparece no build do Windows; no Linux do Actions o arquivo existe.`n- **Fase 2 feita** (HTML sem estilo próprio, só Bootstrap; o visual é a Fase 3). Com 0 posts publicados `generateStaticParams` devolve lista vazia: não testado.`n- **Fase 0 e 1 feitas.** Acesso ao Firestore pela API REST (unQuery), sem apiKey: as rules liberam a leitura pública. Verificação: 
+- **Fase 4 feita (todas as fases concluídas).** Card do LinkedIn conferido pelo usuário. README final pronto; URLs preenchidas no Ademiro; post de exemplo com imagem legendada, conferida no build.`n- **Fase 3 feita.** Legenda das imagens do editor (título) aparece abaixo da imagem (`.fig-caption`, `aria-hidden` para não repetir o alt). `SHOT=<pasta> npm run check` salva capturas de tela. O 404 de prefetch (`__next.$d$slug.__PAGE__.txt`) só aparece no build do Windows; no Linux do Actions o arquivo existe.`n- **Fase 2 feita** (HTML sem estilo próprio, só Bootstrap; o visual é a Fase 3). Com 0 posts publicados `generateStaticParams` devolve lista vazia: não testado.`n- **Fase 0 e 1 feitas.** Acesso ao Firestore pela API REST (unQuery), sem apiKey: as rules liberam a leitura pública. Verificação: 
 pm test, 
 pm run build e 
 pm run check (Chrome headless, `tools/check.mjs`).
