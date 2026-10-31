@@ -45,7 +45,7 @@ Por padrão o site lê o blog **`blog-demo`** do Ademiro de exemplo, então func
 
 | Comando | Para quê |
 |---|---|
-| `npm run dev` | desenvolvimento em http://localhost:3000 |
+| `npm run dev` | desenvolvimento em http://localhost:3000 (sem o `basePath`; ele só vale no build de produção) |
 | `npm run build` | gera o site estático na pasta `out/` |
 | `npm test` | testes das funções puras (Markdown e leitura dos dados) |
 | `npm run lint` | ESLint |

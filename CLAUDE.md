@@ -37,7 +37,7 @@ Ver "Contrato de dados" no PLAN.md. Pontos críticos:
 
 - **`npm ci` no Linux do Actions** pode recusar um lock gerado no Windows (peer dependency ausente ou pacotes opcionais de wasm com versão conflitante, ex.: `@emnapi/*`). Se acontecer, pedir ao usuário as linhas `npm error` do passo *Run npm ci*; corrigir com dependência explícita ou `overrides`, ou regenerar o lock com `npm install --package-lock-only` numa pasta limpa só com o `package.json`.
 - O npm 11 do Windows às vezes troca `"devOptional": true` por `"dev": true` no lock: ruído, não commitar.
-- GitHub Pages com Next estático: `basePath` = `/blog-demo-app`, `.nojekyll` no artefato (senão a pasta `_next` some), `trailingSlash: true` ajuda nas rotas.
+- GitHub Pages com Next estático: `basePath` = `/blog-demo-app` **só no build de produção** (`next.config.ts`; no `npm run dev` o site abre em `http://localhost:3000/`; o `npm run check` serve o `out/` sob o basePath), `.nojekyll` no artefato (senão a pasta `_next` some), `trailingSlash: true` ajuda nas rotas.
 - Meta tags Open Graph precisam de URL **absoluta**.
 - **Build local com dado velho:** o Next guarda cache das consultas em `.next`. Mudou algo no Ademiro e o `npm run build` não refletiu? `Remove-Item .next -Recurse -Force` e refazer. (No Actions o build é sempre limpo.)
 - `node_modules` não apaga no Windows (caminho longo): `Remove-Item -LiteralPath '\\?\<caminho>\node_modules' -Recurse -Force`.
