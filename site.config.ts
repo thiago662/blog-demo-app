@@ -6,3 +6,6 @@ export const siteConfig = {
   // Nome do repositório no GitHub Pages; vazio se o site fica na raiz do domínio.
   basePath: process.env.BASE_PATH ?? '/blog-demo-app',
 }
+
+/** Imagem do card de links (1200x630) quando a página não tem a sua; troque o arquivo em `public/`. */
+export const defaultOgImage = `${siteConfig.siteUrl}/og-default.png`

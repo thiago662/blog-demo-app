@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { siteConfig } from '@/site.config'
+import { defaultOgImage, siteConfig } from '@/site.config'
 import { getBlog, getPost, listPosts } from '@/lib/blog'
 import { formatDate, postFacts } from '@/lib/fields'
 import { renderMarkdown } from '@/lib/markdown'
@@ -15,15 +15,17 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const post = await getPost((await params).slug)
+  const [blog, post] = await Promise.all([getBlog(), getPost((await params).slug)])
   if (!post) return {}
   const description = post.summary || post.subtitle
-  const images = post.coverUrl ? [post.coverUrl] : undefined
+  const images = [post.coverUrl || defaultOgImage]
   return {
     title: post.title,
     description,
     openGraph: {
       type: 'article',
+      siteName: blog.name,
+      locale: 'pt_BR',
       title: post.title,
       description,
       url: `${siteConfig.siteUrl}/${post.slug}/`,
@@ -31,7 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       tags: post.tags,
       images,
     },
-    twitter: { card: images ? 'summary_large_image' : 'summary', title: post.title, description, images },
+    twitter: { card: 'summary_large_image', title: post.title, description, images },
   }
 }
 

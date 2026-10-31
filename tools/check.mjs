@@ -55,6 +55,8 @@ const out = {}
 
 await go(`${BASE}/`)
 out.home = await evaluate(`document.title + ' | h1=' + document.querySelector('h1')?.textContent + ' | cards=' + document.querySelectorAll('.post-card').length`)
+const metaList = `['description','og:title','og:description','og:url','og:image','og:type','og:site_name','twitter:card'].map((k) => k + '=' + (document.querySelector('meta[name="' + k + '"],meta[property="' + k + '"]')?.content ?? '-')).join('\\n')`
+out.homeMeta = await evaluate(metaList)
 const href = await evaluate(`document.querySelector('.post-card-link')?.getAttribute('href') ?? ''`)
 
 if (href) {
@@ -62,7 +64,7 @@ if (href) {
   out.postDireto = await evaluate(`location.pathname + ' | ' + document.title + ' | h1=' + document.querySelector('h1')?.textContent`)
   out.postCorpo = await evaluate(`'tabelas=' + document.querySelectorAll('.post-body table.table').length + ' | codigo=' + document.querySelectorAll('.post-body pre code').length + ' | citacao=' + document.querySelectorAll('.post-body blockquote').length + ' | listas=' + document.querySelectorAll('.post-body li').length + ' | imgs=' + document.querySelectorAll('.post-body img[alt]').length`)
   out.postFatos = await evaluate(`document.querySelector('article > p.text-body-secondary')?.textContent`)
-  out.postMeta = await evaluate(`['description','og:title','og:url','og:image','og:type','twitter:card'].map((k) => k + '=' + (document.querySelector('meta[name="' + k + '"],meta[property="' + k + '"]')?.content ?? '-')).join('\\n')`)
+  out.postMeta = await evaluate(metaList)
 }
 
 await go(`${BASE}/nao-existe-esse-post/`)

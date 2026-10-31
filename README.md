@@ -83,6 +83,7 @@ Por padrão o site lê o blog **`blog-demo`** do Ademiro de exemplo, então func
 | Página do post (título, data, autor, capa, tags) | [`app/[slug]/page.tsx`](app/[slug]/page.tsx) |
 | Página 404 | [`app/not-found.tsx`](app/not-found.tsx) |
 | Favicon | [`app/icon.svg`](app/icon.svg) |
+| Imagem do card de links da home (e dos posts sem capa) | [`public/og-default.png`](public/og-default.png), 1200×630. O endereço fica em `defaultOgImage` no `site.config.ts` |
 | Campos personalizados do blog (hoje `autor`, `humor`, `leitura_min`) | [`lib/fields.ts`](lib/fields.ts); crie os campos em *Configurações* do blog no Ademiro. Qualquer campo pode faltar |
 | Markdown (tags e atributos HTML permitidos) | [`lib/markdown.ts`](lib/markdown.ts); o HTML é sanitizado no build |
 

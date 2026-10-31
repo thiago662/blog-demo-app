@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { GeistSans } from 'geist/font/sans'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './globals.css'
-import { siteConfig } from '@/site.config'
+import { defaultOgImage, siteConfig } from '@/site.config'
 import { getBlog } from '@/lib/blog'
 import ThemeToggle from './theme-toggle'
 
@@ -13,7 +13,17 @@ export async function generateMetadata(): Promise<Metadata> {
     metadataBase: new URL(siteConfig.siteUrl + '/'),
     title: { default: blog.name, template: `%s | ${blog.name}` },
     description: blog.description,
-    openGraph: { siteName: blog.name, locale: 'pt_BR' },
+    // Páginas que definem o próprio `openGraph` (o post) substituem este objeto inteiro, não o mesclam.
+    openGraph: {
+      type: 'website',
+      siteName: blog.name,
+      locale: 'pt_BR',
+      title: blog.name,
+      description: blog.description,
+      url: `${siteConfig.siteUrl}/`,
+      images: [defaultOgImage],
+    },
+    twitter: { card: 'summary_large_image', title: blog.name, description: blog.description, images: [defaultOgImage] },
   }
 }
 
