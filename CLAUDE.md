@@ -39,6 +39,7 @@ Ver "Contrato de dados" no PLAN.md. Pontos críticos:
 - O npm 11 do Windows às vezes troca `"devOptional": true` por `"dev": true` no lock: ruído, não commitar.
 - GitHub Pages com Next estático: `basePath` = `/blog-demo-app`, `.nojekyll` no artefato (senão a pasta `_next` some), `trailingSlash: true` ajuda nas rotas.
 - Meta tags Open Graph precisam de URL **absoluta**.
+- **Build local com dado velho:** o Next guarda cache das consultas em `.next`. Mudou algo no Ademiro e o `npm run build` não refletiu? `Remove-Item .next -Recurse -Force` e refazer. (No Actions o build é sempre limpo.)
 - `node_modules` não apaga no Windows (caminho longo): `Remove-Item -LiteralPath '\\?\<caminho>\node_modules' -Recurse -Force`.
 
 ## Pendências do usuário
