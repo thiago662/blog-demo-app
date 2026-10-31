@@ -1,7 +1,7 @@
-// Teste no navegador do build estático: `npm run build && npm run check`.
+﻿// Teste no navegador do build estÃ¡tico: `npm run build && npm run check`.
 // Serve `out/` sob o basePath (como o GitHub Pages), abre o Chrome headless via CDP e confere
-// erros de console, requisições ao Firestore (esperado 0: os dados vêm no HTML) e o conteúdo das páginas.
-// Requer Google Chrome instalado (caminho padrão do Windows abaixo).
+// erros de console, requisiÃ§Ãµes ao Firestore (esperado 0: os dados vÃªm no HTML) e o conteÃºdo das pÃ¡ginas.
+// Requer Google Chrome instalado (caminho padrÃ£o do Windows abaixo).
 import { spawn } from 'node:child_process'
 import { createServer } from 'node:http'
 import { existsSync, readFileSync, statSync } from 'node:fs'
@@ -16,7 +16,7 @@ const server = createServer((req, res) => {
   let file = path.startsWith(BASE_PATH) ? join(root, path.slice(BASE_PATH.length)) : ''
   if (file && existsSync(file) && statSync(file).isDirectory()) file = join(file, 'index.html')
   const found = file && existsSync(file)
-  if (!found) file = join(root, '404.html') // como o Pages: rota sem página → 404.html
+  if (!found) file = join(root, '404.html') // como o Pages: rota sem pÃ¡gina â†’ 404.html
   res.writeHead(found ? 200 : 404, { 'content-type': types[extname(file)] ?? 'application/octet-stream' })
   res.end(readFileSync(file))
 }).listen(4311)
@@ -55,15 +55,18 @@ const out = {}
 
 await go(`${BASE}/`)
 out.home = await evaluate(`document.title + ' | h1=' + document.querySelector('h1')?.textContent + ' | cards=' + document.querySelectorAll('.post-card').length`)
-const href = await evaluate(`document.querySelector('.post-card')?.getAttribute('href') ?? ''`)
+const href = await evaluate(`document.querySelector('.post-card-link')?.getAttribute('href') ?? ''`)
 
 if (href) {
   await go(`http://localhost:4311${href}`)
   out.postDireto = await evaluate(`location.pathname + ' | ' + document.title + ' | h1=' + document.querySelector('h1')?.textContent`)
+  out.postCorpo = await evaluate(`'tabelas=' + document.querySelectorAll('.post-body table.table').length + ' | codigo=' + document.querySelectorAll('.post-body pre code').length + ' | citacao=' + document.querySelectorAll('.post-body blockquote').length + ' | listas=' + document.querySelectorAll('.post-body li').length + ' | imgs=' + document.querySelectorAll('.post-body img[alt]').length`)
+  out.postFatos = await evaluate(`document.querySelector('article > p.text-body-secondary')?.textContent`)
+  out.postMeta = await evaluate(`['description','og:title','og:url','og:image','og:type','twitter:card'].map((k) => k + '=' + (document.querySelector('meta[name="' + k + '"],meta[property="' + k + '"]')?.content ?? '-')).join('\\n')`)
 }
 
 await go(`${BASE}/nao-existe-esse-post/`)
-out.postInexistente = await evaluate(`document.title + ' | h1=' + document.querySelector('h1')?.textContent`)
+out.postInexistente = await evaluate(`document.title + ' | h1=' + document.querySelector('h1')?.textContent + ' | robots=' + document.querySelector('meta[name=robots]')?.content`)
 
 out.firestoreNoNavegador = firestoreRequests // esperado 0
 console.log(JSON.stringify(out, null, 2))

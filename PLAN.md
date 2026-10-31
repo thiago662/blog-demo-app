@@ -64,10 +64,10 @@ blogs/{blogId}/posts/{postId}  slug, title, subtitle, summary, coverUrl, body (m
 - [x] Markdown → HTML sanitizado (com testes, incluindo o caso da imagem do Ademiro) — `lib/markdown.ts`, `lib/lib.test.ts`
 
 ### Fase 2 — Páginas
-- [ ] `/` lista de posts
-- [ ] `/[slug]` post (título, subtítulo, data, autor, campos `humor`/`leitura_min`, capa, corpo)
-- [ ] 404
-- [ ] Metadata por página: título, description, Open Graph (URL absoluta), Twitter
+- [x] `/` lista de posts
+- [x] `/[slug]` post (título, subtítulo, data, autor, campos `humor`/`leitura_min`, capa, corpo)
+- [x] 404 (`noindex` automático)
+- [x] Metadata por página: título, description, Open Graph (URL absoluta), Twitter
 
 ### Fase 3 — Tema e visual
 - [ ] Preto e branco, claro/escuro com botão, sem "piscar" ao carregar
@@ -90,7 +90,7 @@ blogs/{blogId}/posts/{postId}  slug, title, subtitle, summary, coverUrl, body (m
 
 ## Andamento
 
-- **Fase 0 e 1 feitas.** Acesso ao Firestore pela API REST (unQuery), sem apiKey: as rules liberam a leitura pública. Verificação: 
+- **Fase 2 feita** (HTML sem estilo próprio, só Bootstrap; o visual é a Fase 3). Com 0 posts publicados `generateStaticParams` devolve lista vazia: não testado.`n- **Fase 0 e 1 feitas.** Acesso ao Firestore pela API REST (unQuery), sem apiKey: as rules liberam a leitura pública. Verificação: 
 pm test, 
 pm run build e 
 pm run check (Chrome headless, `tools/check.mjs`).
